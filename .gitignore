@@ -1,0 +1,34 @@
+# IDE and local runtime files
+.idea/
+__pycache__/
+*.py[cod]
+
+# Ultralytics caches and temporary training artifacts
+*.cache
+labels/*.cache
+labels/**/*.cache
+exports/**/*.cache
+
+# Raw capture data and full external downloads are intentionally not versioned.
+# Keep source notes under external/ available in the repository.
+raw/
+external/**
+!external/
+!external/SOURCES.md
+
+# Keep only curated training outputs.
+runs/**
+!runs/
+!runs/segment/
+!runs/segment/my_labelme_finetune/
+!runs/segment/my_labelme_finetune/results.csv
+!runs/segment/my_labelme_finetune/weights/
+!runs/segment/my_labelme_finetune/weights/best.pt
+!runs/segment/my_labelme_best_predict_test_masks/
+!runs/segment/my_labelme_best_predict_test_masks/*.jpg
+
+# Archives and large raw numerical arrays
+*.zip
+*.7z
+*.rar
+*.npy
