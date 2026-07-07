@@ -1,0 +1,47 @@
+{
+  "seed": 20260707,
+  "ratios": {
+    "train": 0.8,
+    "val": 0.1,
+    "test": 0.1
+  },
+  "total_images": 1057,
+  "total_instances": 2248,
+  "summary": {
+    "train": {
+      "images": 845,
+      "labels": 845,
+      "instances": 1826,
+      "sources": {
+        "my_labelme": 38,
+        "roboflow_drago_v1": 384,
+        "roboflow_team128_v5": 423
+      }
+    },
+    "val": {
+      "images": 105,
+      "labels": 105,
+      "instances": 226,
+      "sources": {
+        "my_labelme": 6,
+        "roboflow_drago_v1": 53,
+        "roboflow_team128_v5": 46
+      }
+    },
+    "test": {
+      "images": 107,
+      "labels": 107,
+      "instances": 196,
+      "sources": {
+        "my_labelme": 3,
+        "roboflow_drago_v1": 52,
+        "roboflow_team128_v5": 52
+      }
+    }
+  },
+  "source_totals": {
+    "my_labelme": 47,
+    "roboflow_drago_v1": 489,
+    "roboflow_team128_v5": 521
+  }
+}

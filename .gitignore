@@ -24,6 +24,12 @@ runs/**
 !runs/segment/my_labelme_finetune/results.csv
 !runs/segment/my_labelme_finetune/weights/
 !runs/segment/my_labelme_finetune/weights/best.pt
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/args.yaml
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/results.csv
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/TRAINING_REPORT.md
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/weights/
+!runs/segment/fused_finetune_640_gpu_from_mylabelme/weights/best.pt
 !runs/segment/my_labelme_best_predict_test_masks/
 !runs/segment/my_labelme_best_predict_test_masks/*.jpg
 
