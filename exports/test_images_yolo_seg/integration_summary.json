@@ -1,0 +1,156 @@
+{
+  "source_name": "local_test_images_20260707",
+  "seed": 20260707,
+  "new_rows": [
+    {
+      "split": "test",
+      "image": "local_test_images_20260707_0007.jpg",
+      "label": "local_test_images_20260707_0007.txt",
+      "instances": 14,
+      "source_image": "test_images/微信图片_20260707154831_13_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154831_13_2.json",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0001.jpg",
+      "label": "local_test_images_20260707_0001.txt",
+      "instances": 11,
+      "source_image": "test_images/微信图片_20260707154823_7_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154823_7_2.json",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0002.jpg",
+      "label": "local_test_images_20260707_0002.txt",
+      "instances": 9,
+      "source_image": "test_images/微信图片_20260707154824_8_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154824_8_2.json",
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0003.jpg",
+      "label": "local_test_images_20260707_0003.txt",
+      "instances": 12,
+      "source_image": "test_images/微信图片_20260707154824_9_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154824_9_2.json",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0004.jpg",
+      "label": "local_test_images_20260707_0004.txt",
+      "instances": 10,
+      "source_image": "test_images/微信图片_20260707154825_10_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154825_10_2.json",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0005.jpg",
+      "label": "local_test_images_20260707_0005.txt",
+      "instances": 11,
+      "source_image": "test_images/微信图片_20260707154827_11_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154827_11_2.json",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0006.jpg",
+      "label": "local_test_images_20260707_0006.txt",
+      "instances": 9,
+      "source_image": "test_images/微信图片_20260707154829_12_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154829_12_2.json",
+      "width": 1024,
+      "height": 1366
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0008.jpg",
+      "label": "local_test_images_20260707_0008.txt",
+      "instances": 13,
+      "source_image": "test_images/微信图片_20260707154832_14_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154832_14_2.json",
+      "width": 1707,
+      "height": 1280
+    },
+    {
+      "split": "train",
+      "image": "local_test_images_20260707_0009.jpg",
+      "label": "local_test_images_20260707_0009.txt",
+      "instances": 14,
+      "source_image": "test_images/微信图片_20260707154834_15_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154834_15_2.json",
+      "width": 1707,
+      "height": 1280
+    },
+    {
+      "split": "val",
+      "image": "local_test_images_20260707_0010.jpg",
+      "label": "local_test_images_20260707_0010.txt",
+      "instances": 13,
+      "source_image": "test_images/微信图片_20260707154836_16_2.jpg",
+      "source_json": "test_images/label/微信图片_20260707154836_16_2.json",
+      "width": 1707,
+      "height": 1280
+    }
+  ],
+  "main_dataset": {
+    "total_images": 1003,
+    "total_instances": 2309,
+    "summary": {
+      "train": {
+        "images": 802,
+        "labels": 802,
+        "instances": 1798,
+        "sources": {
+          "local_test_images_20260707": 8,
+          "my_labelme": 35,
+          "roboflow_drago_v1": 392,
+          "roboflow_team128_v5": 367
+        }
+      },
+      "val": {
+        "images": 100,
+        "labels": 100,
+        "instances": 257,
+        "sources": {
+          "local_test_images_20260707": 1,
+          "my_labelme": 5,
+          "roboflow_drago_v1": 42,
+          "roboflow_team128_v5": 52
+        }
+      },
+      "test": {
+        "images": 101,
+        "labels": 101,
+        "instances": 254,
+        "sources": {
+          "local_test_images_20260707": 1,
+          "my_labelme": 7,
+          "roboflow_drago_v1": 51,
+          "roboflow_team128_v5": 42
+        }
+      }
+    },
+    "source_totals": {
+      "local_test_images_20260707": 10,
+      "my_labelme": 47,
+      "roboflow_drago_v1": 485,
+      "roboflow_team128_v5": 461
+    }
+  },
+  "removed_label_caches": [
+    "D:/MelonDataset/watermelon_seg/labels/test.cache",
+    "D:/MelonDataset/watermelon_seg/labels/train.cache",
+    "D:/MelonDataset/watermelon_seg/labels/val.cache"
+  ]
+}

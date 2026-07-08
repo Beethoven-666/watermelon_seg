@@ -1,0 +1,7 @@
+path: D:/MelonDataset/watermelon_seg
+train: D:/MelonDataset/watermelon_seg/exports/hard_negative_team128_trainval_yolo_seg/train_images_hard_oversample_with_negatives.txt
+val: D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/val_images.txt
+test: D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/test_images.txt
+
+names:
+  0: watermelon

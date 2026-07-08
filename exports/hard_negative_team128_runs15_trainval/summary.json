@@ -1,0 +1,43 @@
+{
+  "dataset_root": "D:/MelonDataset/watermelon_seg",
+  "images_dirs": [
+    "D:/MelonDataset/watermelon_seg/images/train",
+    "D:/MelonDataset/watermelon_seg/images/val"
+  ],
+  "pred_labels_dirs": [
+    "D:/MelonDataset/watermelon_seg/runs/runs22/segment/runs15_best_train_predict/labels",
+    "D:/MelonDataset/watermelon_seg/runs/runs22/segment/runs15_best_val_predict/labels"
+  ],
+  "hard_negative_images": 266,
+  "candidates_total": 1402,
+  "skipped_existing_match": 1004,
+  "skipped_gt_crop_overlap": 39,
+  "by_source": {
+    "roboflow_team128_v5": 266
+  },
+  "by_split": {
+    "train": 243,
+    "val": 23
+  },
+  "parameters": {
+    "min_confidence": 0.125,
+    "max_best_gt_iou": 0.1,
+    "max_gt_crop_overlap": 0.02,
+    "min_pred_area_ratio": 0.0005,
+    "max_pred_area_ratio": 0.06,
+    "crop_expand": 1.8,
+    "min_crop_size": 96,
+    "max_crop_size": 384,
+    "max_crops_per_image": 3,
+    "max_crops_total": 900,
+    "include_sources": [
+      "roboflow_team128_v5"
+    ]
+  },
+  "files": {
+    "image_list": "D:/MelonDataset/watermelon_seg/exports/hard_negative_team128_runs15_trainval/hard_negative_images.txt",
+    "manifest": "D:/MelonDataset/watermelon_seg/exports/hard_negative_team128_runs15_trainval/hard_negative_manifest.tsv",
+    "images_dir": "D:/MelonDataset/watermelon_seg/exports/hard_negative_team128_runs15_trainval/images/train",
+    "labels_dir": "D:/MelonDataset/watermelon_seg/exports/hard_negative_team128_runs15_trainval/labels/train"
+  }
+}

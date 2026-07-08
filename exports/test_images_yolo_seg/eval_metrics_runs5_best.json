@@ -1,0 +1,39 @@
+{
+  "date": "2026-07-07",
+  "model": "D:/MelonDataset/watermelon_seg/runs/runs5/segment/clean_finetune_768_precision_epoch10/weights/best.pt",
+  "data": "D:/MelonDataset/watermelon_seg/exports/test_images_yolo_seg/data.yaml",
+  "split": "test",
+  "imgsz": 768,
+  "batch": 4,
+  "device": "cpu",
+  "dataset": {
+    "images": 10,
+    "labels": 10,
+    "instances": 116,
+    "class": "watermelon"
+  },
+  "box": {
+    "precision": 0.846,
+    "recall": 0.712,
+    "map50": 0.789,
+    "map50_95": 0.583
+  },
+  "mask": {
+    "precision": 0.817,
+    "recall": 0.69,
+    "map50": 0.758,
+    "map50_95": 0.515
+  },
+  "speed_ms_per_image": {
+    "preprocess": 2.2,
+    "inference": 106.4,
+    "loss": 0.0,
+    "postprocess": 5.3
+  },
+  "results_dir": "D:/MelonDataset/watermelon_seg/runs/runs5/segment/test_images_best_eval",
+  "command": "yolo segment val model=D:/MelonDataset/watermelon_seg/runs/runs5/segment/clean_finetune_768_precision_epoch10/weights/best.pt data=D:/MelonDataset/watermelon_seg/exports/test_images_yolo_seg/data.yaml split=test imgsz=768 batch=4 device=cpu project=D:/MelonDataset/watermelon_seg/runs/runs5/segment name=test_images_best_eval plots=True save_json=False exist_ok=True",
+  "notes": [
+    "Initial CUDA device=0 run failed because this environment has CPU-only PyTorch.",
+    "Ultralytics restored and saved copied JPEGs under exports/test_images_yolo_seg/images/test; source files in test_images were not modified."
+  ]
+}

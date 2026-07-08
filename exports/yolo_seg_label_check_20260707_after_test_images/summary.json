@@ -1,0 +1,40 @@
+{
+  "root": "D:/MelonDataset/watermelon_seg",
+  "output_dir": "D:/MelonDataset/watermelon_seg/exports/yolo_seg_label_check_20260707_after_test_images",
+  "valid_class_ids": [
+    0
+  ],
+  "splits": {
+    "train": {
+      "images": 802,
+      "labels": 802,
+      "instances": 1798,
+      "errors": 0,
+      "warnings": 0,
+      "visualizations": 0
+    },
+    "val": {
+      "images": 100,
+      "labels": 100,
+      "instances": 257,
+      "errors": 0,
+      "warnings": 0,
+      "visualizations": 0
+    },
+    "test": {
+      "images": 101,
+      "labels": 101,
+      "instances": 254,
+      "errors": 0,
+      "warnings": 0,
+      "visualizations": 0
+    }
+  },
+  "images": 1003,
+  "labels": 1003,
+  "instances": 2309,
+  "errors": 0,
+  "warnings": 0,
+  "visualizations": 0,
+  "issue_counts": {}
+}

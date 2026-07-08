@@ -43,6 +43,18 @@
 - 标注统计：47 张图片 / 511 个 polygon 实例。
 - 单独转换结果：`exports/my_labelme_yolo_seg`
 
+## 4. 本地 test_images LabelMe 标注
+
+- 来源目录：`test_images/label`
+- 对应图片目录：`test_images`
+- 原始格式：LabelMe polygon JSON
+- 类别：`watermelon`
+- 标注统计：10 张图片 / 116 个 polygon 实例。
+- 单独转换结果：`exports/test_images_yolo_seg`
+- 并入主数据集日期：2026-07-07
+- 并入命名：`local_test_images_20260707_0001.jpg` 到 `local_test_images_20260707_0010.jpg`
+- 并入拆分：train 8 张 / val 1 张 / test 1 张，种子 `20260707`
+
 ## 融合结果
 
 - 输出位置：根目录 `images/train|val|test` 和 `labels/train|val|test`
@@ -50,10 +62,13 @@
 - 类别：`0: watermelon`
 - 随机种子：`20260707`
 - 拆分比例：train 80% / val 10% / test 10%
-- 训练集：845 张图片 / 1826 个实例
-- 验证集：105 张图片 / 226 个实例
-- 测试集：107 张图片 / 196 个实例
-- 总计：1057 张图片 / 2248 个实例
+- 人工可视化检查后已从根目录主数据集中移除 64 张问题图片及对应标签。
+- 训练集：802 张图片 / 1798 个实例
+- 验证集：100 张图片 / 257 个实例
+- 测试集：101 张图片 / 254 个实例
+- 总计：1003 张图片 / 2309 个实例
+- 2026-07-07 标签复查：删除 2 个极小异常多边形和 5 个重复实例。
+- 2026-07-07 新增本地 `test_images` LabelMe 标注：10 张图片 / 116 个实例，按 8/1/1 并入 train/val/test。
 - 拆分清单：`exports/fused_watermelon_yolo_seg/split_manifest.tsv`
 - 统计摘要：`exports/fused_watermelon_yolo_seg/summary.json`
 

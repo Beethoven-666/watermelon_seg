@@ -1,0 +1,7 @@
+path: D:/MelonDataset/watermelon_seg/exports/test_images_yolo_seg
+train: images/test
+val: images/test
+test: images/test
+
+names:
+  0: watermelon

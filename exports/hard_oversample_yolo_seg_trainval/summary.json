@@ -1,0 +1,26 @@
+{
+  "dataset_root": "D:/MelonDataset/watermelon_seg",
+  "include_val_in_train": true,
+  "source_train_images": 902,
+  "oversampled_train_entries": 1514,
+  "val_images": 100,
+  "test_images": 101,
+  "small_area": 0.005,
+  "tiny_area": 0.001,
+  "edge_margin": 0.02,
+  "max_repeat": 5,
+  "repeat_histogram": {
+    "1": 699,
+    "2": 14,
+    "3": 63,
+    "4": 32,
+    "5": 94
+  },
+  "files": {
+    "data_yaml": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/data.yaml",
+    "train_list": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/train_images_hard_oversample.txt",
+    "val_list": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/val_images.txt",
+    "test_list": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/test_images.txt",
+    "manifest": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/oversample_manifest.tsv"
+  }
+}

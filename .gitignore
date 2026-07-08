@@ -19,19 +19,31 @@ external/**
 # Keep only curated training outputs.
 runs/**
 !runs/
-!runs/segment/
-!runs/segment/my_labelme_finetune/
-!runs/segment/my_labelme_finetune/results.csv
-!runs/segment/my_labelme_finetune/weights/
-!runs/segment/my_labelme_finetune/weights/best.pt
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/args.yaml
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/results.csv
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/TRAINING_REPORT.md
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/weights/
-!runs/segment/fused_finetune_640_gpu_from_mylabelme/weights/best.pt
-!runs/segment/my_labelme_best_predict_test_masks/
-!runs/segment/my_labelme_best_predict_test_masks/*.jpg
+!runs/RUNS_INDEX.md
+!runs/runs2/
+!runs/runs2/segment/
+!runs/runs2/segment/my_labelme_finetune/
+!runs/runs2/segment/my_labelme_finetune/results.csv
+!runs/runs2/segment/my_labelme_finetune/weights/
+!runs/runs2/segment/my_labelme_finetune/weights/best.pt
+!runs/runs2/segment/my_labelme_best_predict_test_masks/
+!runs/runs2/segment/my_labelme_best_predict_test_masks/*.jpg
+!runs/runs4/
+!runs/runs4/segment/
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/args.yaml
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/results.csv
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/TRAINING_REPORT.md
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/weights/
+!runs/runs4/segment/fused_finetune_640_gpu_from_mylabelme/weights/best.pt
+!runs/runs5/
+!runs/runs5/segment/
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/args.yaml
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/results.csv
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/TRAINING_REPORT.md
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/weights/
+!runs/runs5/segment/clean_finetune_768_precision_epoch10/weights/best.pt
 
 # Archives and large raw numerical arrays
 *.zip

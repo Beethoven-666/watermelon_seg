@@ -1,0 +1,7 @@
+path: D:/MelonDataset/watermelon_seg
+train: exports/trainval_lists/trainval_images.txt
+val: exports/trainval_lists/test_images.txt
+test: exports/trainval_lists/test_images.txt
+
+names:
+  0: watermelon

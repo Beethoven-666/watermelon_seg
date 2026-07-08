@@ -1,0 +1,91 @@
+{
+  "source_labelme_dir": "D:/MelonDataset/watermelon_seg/test_images/label",
+  "source_image_dir": "D:/MelonDataset/watermelon_seg/test_images",
+  "output_dir": "D:/MelonDataset/watermelon_seg/exports/test_images_yolo_seg",
+  "class_name": "watermelon",
+  "images": 10,
+  "labels": 10,
+  "instances": 116,
+  "files": [
+    {
+      "image": "微信图片_20260707154823_7_2.jpg",
+      "labelme_json": "微信图片_20260707154823_7_2.json",
+      "label": "微信图片_20260707154823_7_2.txt",
+      "instances": 11,
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "image": "微信图片_20260707154824_8_2.jpg",
+      "labelme_json": "微信图片_20260707154824_8_2.json",
+      "label": "微信图片_20260707154824_8_2.txt",
+      "instances": 9,
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "image": "微信图片_20260707154824_9_2.jpg",
+      "labelme_json": "微信图片_20260707154824_9_2.json",
+      "label": "微信图片_20260707154824_9_2.txt",
+      "instances": 12,
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "image": "微信图片_20260707154825_10_2.jpg",
+      "labelme_json": "微信图片_20260707154825_10_2.json",
+      "label": "微信图片_20260707154825_10_2.txt",
+      "instances": 10,
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "image": "微信图片_20260707154827_11_2.jpg",
+      "labelme_json": "微信图片_20260707154827_11_2.json",
+      "label": "微信图片_20260707154827_11_2.txt",
+      "instances": 11,
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "image": "微信图片_20260707154829_12_2.jpg",
+      "labelme_json": "微信图片_20260707154829_12_2.json",
+      "label": "微信图片_20260707154829_12_2.txt",
+      "instances": 9,
+      "width": 1024,
+      "height": 1366
+    },
+    {
+      "image": "微信图片_20260707154831_13_2.jpg",
+      "labelme_json": "微信图片_20260707154831_13_2.json",
+      "label": "微信图片_20260707154831_13_2.txt",
+      "instances": 14,
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "image": "微信图片_20260707154832_14_2.jpg",
+      "labelme_json": "微信图片_20260707154832_14_2.json",
+      "label": "微信图片_20260707154832_14_2.txt",
+      "instances": 13,
+      "width": 1707,
+      "height": 1280
+    },
+    {
+      "image": "微信图片_20260707154834_15_2.jpg",
+      "labelme_json": "微信图片_20260707154834_15_2.json",
+      "label": "微信图片_20260707154834_15_2.txt",
+      "instances": 14,
+      "width": 1707,
+      "height": 1280
+    },
+    {
+      "image": "微信图片_20260707154836_16_2.jpg",
+      "labelme_json": "微信图片_20260707154836_16_2.json",
+      "label": "微信图片_20260707154836_16_2.txt",
+      "instances": 13,
+      "width": 1707,
+      "height": 1280
+    }
+  ]
+}

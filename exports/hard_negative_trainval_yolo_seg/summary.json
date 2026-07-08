@@ -1,0 +1,12 @@
+{
+  "dataset_root": "D:/MelonDataset/watermelon_seg",
+  "base_train_entries": 1514,
+  "hard_negative_entries": 424,
+  "combined_train_entries": 1938,
+  "files": {
+    "train": "D:/MelonDataset/watermelon_seg/exports/hard_negative_trainval_yolo_seg/train_images_hard_oversample_with_negatives.txt",
+    "val": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/val_images.txt",
+    "test": "D:/MelonDataset/watermelon_seg/exports/hard_oversample_yolo_seg_trainval/test_images.txt",
+    "data_yaml": "D:/MelonDataset/watermelon_seg/exports/hard_negative_trainval_yolo_seg/data.yaml"
+  }
+}

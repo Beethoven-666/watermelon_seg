@@ -10,5 +10,5 @@
 训练命令示例：
 
 ```powershell
-yolo segment train model=D:/MelonDataset/watermelon_seg/runs/segment/train/weights/best.pt data=D:/MelonDataset/watermelon_seg/exports/my_labelme_yolo_seg/data.yaml imgsz=640 epochs=200 batch=4 device=cpu workers=0 patience=50 seed=20260706 project=D:/MelonDataset/watermelon_seg/runs/segment name=my_labelme_finetune exist_ok=True plots=True close_mosaic=20 cache=True
+yolo segment train model=D:/MelonDataset/watermelon_seg/runs/runs1/segment/train/weights/best.pt data=D:/MelonDataset/watermelon_seg/exports/my_labelme_yolo_seg/data.yaml imgsz=640 epochs=200 batch=4 device=cpu workers=0 patience=50 seed=20260706 project=D:/MelonDataset/watermelon_seg/runs/runs2/segment name=my_labelme_finetune exist_ok=True plots=True close_mosaic=20 cache=True
 ```

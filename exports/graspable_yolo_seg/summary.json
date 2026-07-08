@@ -1,0 +1,30 @@
+{
+  "source_root": "D:\\MelonDataset\\watermelon_seg",
+  "output_root": "D:\\MelonDataset\\watermelon_seg\\exports\\graspable_yolo_seg",
+  "min_area_ratio": 0.02,
+  "drop_edge": false,
+  "edge_margin_ratio": 0.01,
+  "splits": {
+    "train": {
+      "images": 802,
+      "source_instances": 1798,
+      "kept_instances": 739,
+      "removed_instances": 1059,
+      "empty_labels": 179
+    },
+    "val": {
+      "images": 100,
+      "source_instances": 257,
+      "kept_instances": 89,
+      "removed_instances": 168,
+      "empty_labels": 29
+    },
+    "test": {
+      "images": 101,
+      "source_instances": 254,
+      "kept_instances": 97,
+      "removed_instances": 157,
+      "empty_labels": 21
+    }
+  }
+}

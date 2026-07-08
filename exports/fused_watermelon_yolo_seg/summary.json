@@ -5,43 +5,84 @@
     "val": 0.1,
     "test": 0.1
   },
-  "total_images": 1057,
-  "total_instances": 2248,
+  "total_images": 1003,
+  "total_instances": 2309,
+  "removed_images": 64,
+  "removed_instances": 48,
   "summary": {
     "train": {
-      "images": 845,
-      "labels": 845,
-      "instances": 1826,
+      "images": 802,
+      "labels": 802,
+      "instances": 1798,
       "sources": {
-        "my_labelme": 38,
-        "roboflow_drago_v1": 384,
-        "roboflow_team128_v5": 423
+        "local_test_images_20260707": 8,
+        "my_labelme": 35,
+        "roboflow_drago_v1": 392,
+        "roboflow_team128_v5": 367
       }
     },
     "val": {
-      "images": 105,
-      "labels": 105,
-      "instances": 226,
+      "images": 100,
+      "labels": 100,
+      "instances": 257,
       "sources": {
-        "my_labelme": 6,
-        "roboflow_drago_v1": 53,
-        "roboflow_team128_v5": 46
+        "local_test_images_20260707": 1,
+        "my_labelme": 5,
+        "roboflow_drago_v1": 42,
+        "roboflow_team128_v5": 52
       }
     },
     "test": {
-      "images": 107,
-      "labels": 107,
-      "instances": 196,
+      "images": 101,
+      "labels": 101,
+      "instances": 254,
       "sources": {
-        "my_labelme": 3,
-        "roboflow_drago_v1": 52,
-        "roboflow_team128_v5": 52
+        "local_test_images_20260707": 1,
+        "my_labelme": 7,
+        "roboflow_drago_v1": 51,
+        "roboflow_team128_v5": 42
       }
     }
   },
   "source_totals": {
+    "local_test_images_20260707": 10,
     "my_labelme": 47,
-    "roboflow_drago_v1": 489,
-    "roboflow_team128_v5": 521
+    "roboflow_drago_v1": 485,
+    "roboflow_team128_v5": 461
+  },
+  "removed_summary": {
+    "test": {
+      "images": 8,
+      "instances": 9
+    },
+    "train": {
+      "images": 51,
+      "instances": 35
+    },
+    "val": {
+      "images": 5,
+      "instances": 4
+    }
+  },
+  "manual_label_fixes_20260707": {
+    "removed_instances": 7,
+    "train_tiny_polygons_removed": 2,
+    "train_duplicate_instances_removed": 4,
+    "test_duplicate_instances_removed": 1,
+    "post_fix_check": "exports/yolo_seg_label_check_20260707_clean_after_fix2/report.md"
+  },
+  "local_test_images_20260707": {
+    "source": "test_images",
+    "converted_dataset": "exports/test_images_yolo_seg",
+    "added_to_main_dataset": "2026-07-07",
+    "seed": 20260707,
+    "split_counts": {
+      "train": 8,
+      "val": 1,
+      "test": 1
+    },
+    "images": 10,
+    "instances": 116,
+    "naming": "local_test_images_20260707_0001.jpg ..."
   }
 }
