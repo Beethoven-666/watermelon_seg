@@ -50,3 +50,15 @@ runs/**
 *.7z
 *.rar
 *.npy
+
+# Generated visual QA and hard-negative crops are reproducible local artifacts.
+exports/yolo_seg_label_check/visualizations/
+exports/hard_negative_crops_runs20_trainval/images/
+exports/hard_negative_team128_runs15_trainval/images/
+
+# These are duplicate local capture copies; the curated versions live in the
+# fused dataset image tree when they are needed for training.
+test_images/
+
+# Ultralytics release weights are downloaded locally, not versioned.
+yolo*.pt
