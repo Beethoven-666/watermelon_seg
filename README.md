@@ -69,6 +69,18 @@ yolo segment train model=yolo11n-seg.pt data=D:/MelonDataset/watermelon_seg/data
 yolo segment val model=path/to/best.pt data=D:/MelonDataset/watermelon_seg/data.yaml
 ```
 
+## SAM 3 零样本水果部署与西瓜基准
+
+已新增 `facebookresearch/sam3` 的 Windows 部署入口，用英文概念提示零样本检测/分割西瓜及其他水果。SAM 3 源码、3.45 GB gated 权重和多水果预测结果均与根目录单类别 YOLO 训练集隔离，不会修改 `data.yaml`、`classes.txt` 或根目录标签。
+
+```powershell
+conda activate sam3
+python scripts/predict_sam3_zero_shot_fruits.py --diagnose
+python scripts/benchmark_sam3_watermelon.py --dry-run
+```
+
+西瓜正式基准已在 100 张 val 上选择阈值，再冻结到 101 张 / 254 实例 test：COCO Mask AP50 87.06%、AP75 75.30%、mAP50-95 70.08%；val 阈值冻结到 test 后 Precision 84.05%、Recall 85.04%、F1 84.54%、正样本实例 Accuracy 73.22%，未达到 P90/R90。后验拆分审计估计同源/重复图使 F1 高估约 0.63 个百分点，去重后约 83.91%，结论不变。详细报告见 `runs/runs27/sam3/watermelon_zero_shot_benchmark/SAM3_WATERMELON_EVALUATION.md`，部署步骤与安全边界见 `deploy/sam3/README.md`。
+
 ## 最新训练结果
 
 融合数据集的 GPU 微调结果、参数和评估指标见：

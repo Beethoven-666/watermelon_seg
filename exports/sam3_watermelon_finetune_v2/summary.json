@@ -1,0 +1,304 @@
+{
+  "category": {
+    "coco_id": 1,
+    "name": "watermelon",
+    "source_yolo_id": 0,
+    "supercategory": "fruit"
+  },
+  "dataset_version": "sam3_watermelon_finetune_v2",
+  "derived": {
+    "test_frozen": {
+      "background_images": 0,
+      "images": 101,
+      "instances": 254,
+      "scenes": 97,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 1,
+          "instances": 14
+        },
+        "my_labelme": {
+          "images": 7,
+          "instances": 75
+        },
+        "roboflow_drago_v1": {
+          "images": 51,
+          "instances": 59
+        },
+        "roboflow_team128_v5": {
+          "images": 42,
+          "instances": 106
+        }
+      },
+      "unique_image_sha256": 99
+    },
+    "test_scene_unique": {
+      "background_images": 0,
+      "images": 97,
+      "instances": 249,
+      "scenes": 97,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 1,
+          "instances": 14
+        },
+        "my_labelme": {
+          "images": 7,
+          "instances": 75
+        },
+        "roboflow_drago_v1": {
+          "images": 47,
+          "instances": 54
+        },
+        "roboflow_team128_v5": {
+          "images": 42,
+          "instances": 106
+        }
+      },
+      "unique_image_sha256": 97
+    },
+    "train_clean": {
+      "background_images": 1,
+      "images": 642,
+      "instances": 1607,
+      "scenes": 551,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 8,
+          "instances": 89
+        },
+        "my_labelme": {
+          "images": 35,
+          "instances": 379
+        },
+        "roboflow_drago_v1": {
+          "images": 232,
+          "instances": 274
+        },
+        "roboflow_team128_v5": {
+          "images": 367,
+          "instances": 865
+        }
+      },
+      "unique_image_sha256": 642
+    },
+    "val_clean": {
+      "background_images": 1,
+      "images": 95,
+      "instances": 250,
+      "scenes": 93,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 1,
+          "instances": 13
+        },
+        "my_labelme": {
+          "images": 5,
+          "instances": 57
+        },
+        "roboflow_drago_v1": {
+          "images": 37,
+          "instances": 46
+        },
+        "roboflow_team128_v5": {
+          "images": 52,
+          "instances": 134
+        }
+      },
+      "unique_image_sha256": 95
+    }
+  },
+  "exclusions": {
+    "by_scope_and_reason": {
+      "base_dataset::clean_val_scene": 29,
+      "base_dataset::clean_val_scene_and_sha256": 11,
+      "base_dataset::exact_duplicate_within_train": 50,
+      "base_dataset::perceptual_d4_lower_priority": 9,
+      "base_dataset::protected_test_scene": 55,
+      "base_dataset::protected_test_scene_and_sha256": 11,
+      "test_scene_unique_view::scene_duplicate_within_test": 4
+    },
+    "rows": 169
+  },
+  "frozen_test": {
+    "actual_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "expected_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "matched": true
+  },
+  "generated_files_sha256": {
+    "annotations/instances_test_frozen.json": "0f5075f7398c6a45934ec98426f15e88095a3e969f587b81edb787e95492dcb5",
+    "annotations/instances_test_scene_unique.json": "47144432b6a60f4b9e7d912b9b4d1b31ad0d7dba455c2c907604efce2f0c1613",
+    "annotations/instances_train_clean.json": "903eb0bd2598413380fe7abc32bd649e8584f2eabb7a1399b7770fa6fa691753",
+    "annotations/instances_val_clean.json": "c1afa6fb3b58603d27cf9d236b81f8021ad8fe5ef1ea597bdc9ad086a03b56e4",
+    "manifests/exclusions.tsv": "d3235543d22a648caac51e56be682ff5e3f200172c04a46cc4e812602f9320d1",
+    "manifests/images.tsv": "ba9a7c034f4581f157a9d0db08e63e64658f5b3f6a4a5fd02ece085c4eeeef1e",
+    "manifests/instances.tsv": "7aabf3bc2553f71fa3f0f9e6249d8b199d005950ed558168b1badb352f8515b5",
+    "manifests/perceptual_groups.tsv": "f42bddaa71491817d64c74116d9d4cbf91ee3931f8db27f2753f815a6ec70aab",
+    "manifests/scene_groups.tsv": "b5551691bfeafbeb3aebe6dc334a72e5c9f93a336909e512a2d48e90c56223a4"
+  },
+  "known_limitations": [
+    "Explicit original-asset and exact-byte leakage is removed, but acquisition-session independence is not proven.",
+    "local_test_images_20260707 is one short capture burst split across the original train/val/test.",
+    "my_labelme contains temporally adjacent frames split across the original train/val/test.",
+    "The frozen test has no background-only image, so it cannot estimate no-watermelon specificity."
+  ],
+  "original": {
+    "test": {
+      "background_images": 0,
+      "images": 101,
+      "instances": 254,
+      "scenes": 97,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 1,
+          "instances": 14
+        },
+        "my_labelme": {
+          "images": 7,
+          "instances": 75
+        },
+        "roboflow_drago_v1": {
+          "images": 51,
+          "instances": 59
+        },
+        "roboflow_team128_v5": {
+          "images": 42,
+          "instances": 106
+        }
+      },
+      "unique_image_sha256": 99
+    },
+    "train": {
+      "background_images": 1,
+      "images": 802,
+      "instances": 1798,
+      "scenes": 620,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 8,
+          "instances": 89
+        },
+        "my_labelme": {
+          "images": 35,
+          "instances": 379
+        },
+        "roboflow_drago_v1": {
+          "images": 392,
+          "instances": 465
+        },
+        "roboflow_team128_v5": {
+          "images": 367,
+          "instances": 865
+        }
+      },
+      "unique_image_sha256": 746
+    },
+    "val": {
+      "background_images": 1,
+      "images": 100,
+      "instances": 257,
+      "scenes": 98,
+      "sources": {
+        "local_test_images_20260707": {
+          "images": 1,
+          "instances": 13
+        },
+        "my_labelme": {
+          "images": 5,
+          "instances": 57
+        },
+        "roboflow_drago_v1": {
+          "images": 42,
+          "instances": 53
+        },
+        "roboflow_team128_v5": {
+          "images": 52,
+          "instances": 134
+        }
+      },
+      "unique_image_sha256": 100
+    }
+  },
+  "perceptual_d4_audit": {
+    "coarse_candidates": 9,
+    "confirmed_by_split_pair": {
+      "train_clean__val_clean": 9
+    },
+    "confirmed_pairs": 9,
+    "excluded_images": 9,
+    "excluded_instances": 9,
+    "groups": 5,
+    "residual_confirmed_pairs": 0,
+    "rule": {
+      "coarse_corr_threshold": 0.995,
+      "coarse_size": 16,
+      "color": "Pillow grayscale L",
+      "confirm_corr_threshold": 0.995,
+      "confirm_same_d4": true,
+      "confirm_size": 128,
+      "d4_order": [
+        "rot0",
+        "flip_lr_rot0",
+        "rot90",
+        "flip_lr_rot90",
+        "rot180",
+        "flip_lr_rot180",
+        "rot270",
+        "flip_lr_rot270"
+      ],
+      "normalization": "flatten, zero mean, L2 norm",
+      "priority": [
+        "test_frozen",
+        "val_clean",
+        "train_clean"
+      ],
+      "resize": "Pillow Bilinear",
+      "ssim": "skimage.metrics.structural_similarity, data_range=255",
+      "ssim_threshold": 0.96
+    },
+    "scanned_cross_split_pairs": 137191
+  },
+  "policy": {
+    "coco_file_name_base": "D:/MelonDataset/watermelon_seg",
+    "images_copied": false,
+    "perceptual_d4": {
+      "coarse_corr_threshold": 0.995,
+      "coarse_size": 16,
+      "color": "Pillow grayscale L",
+      "confirm_corr_threshold": 0.995,
+      "confirm_same_d4": true,
+      "confirm_size": 128,
+      "d4_order": [
+        "rot0",
+        "flip_lr_rot0",
+        "rot90",
+        "flip_lr_rot90",
+        "rot180",
+        "flip_lr_rot180",
+        "rot270",
+        "flip_lr_rot270"
+      ],
+      "normalization": "flatten, zero mean, L2 norm",
+      "priority": [
+        "test_frozen",
+        "val_clean",
+        "train_clean"
+      ],
+      "resize": "Pillow Bilinear",
+      "ssim": "skimage.metrics.structural_similarity, data_range=255",
+      "ssim_threshold": 0.96
+    },
+    "scene_key": "source + image stem before .rf.; otherwise full stem",
+    "test": "frozen; never removed from test_frozen",
+    "train": "exclude scene_key or image SHA-256 found in test or clean val",
+    "train_exact_duplicates": "keep deterministic first only after maximum-cardinality one-to-one raster-mask matching at IoU >= 0.99",
+    "val": "exclude scene_key or image SHA-256 found in frozen test"
+  },
+  "source": {
+    "project_root": "D:/MelonDataset/watermelon_seg",
+    "script": "scripts/build_sam3_finetune_dataset.py",
+    "script_sha256": "64c57307dcb61bdd6d202eee7064a3ff490537baed124125c8f22b71aa59cf28",
+    "split_manifest": "exports/fused_watermelon_yolo_seg/split_manifest.tsv",
+    "split_manifest_sha256": "3ed7d1d27db4945d395b5fee91c50c7f0beebe24531cfee3b864403731a63028"
+  }
+}

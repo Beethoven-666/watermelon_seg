@@ -1,0 +1,61 @@
+{
+  "checks": {
+    "all_coco_jsons_round_trip_through_pycocotools_COCO": true,
+    "all_exact_duplicate_labels_semantically_equal_at_iou_0p99": true,
+    "all_yolo_rows_class_0_and_valid_polygons": true,
+    "bbox_and_area_generated_by_pycocotools": true,
+    "cross_split_scene_and_sha256_intersections_zero": true,
+    "frozen_test_fingerprint_matches": true,
+    "manifest_exactly_covers_source_directories": true,
+    "source_files_unchanged_after_generation": true
+  },
+  "cross_split_intersections": {
+    "train_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "train_clean__val_clean": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "val_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    }
+  },
+  "exact_image_duplicates": {
+    "equivalent_raster_groups_at_iou_threshold": 1,
+    "exact_raster_groups": 79,
+    "groups": 80,
+    "mask_iou_threshold": 0.99,
+    "minimum_matched_iou": 0.9969942389580029,
+    "rows": 160
+  },
+  "frozen_test": {
+    "actual_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "expected_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "matched": true
+  },
+  "generated_files_sha256": {
+    "annotations/instances_test_frozen.json": "7f4fea4fe9afad5d3ea186ef895675a93bc7bcd0f590f22e7ff672568cd8a084",
+    "annotations/instances_test_scene_unique.json": "89ffbc49afda607ac51cc1cf7a31a50ac20fa8f9734cf7c9f650943c232dc05a",
+    "annotations/instances_train_clean.json": "c28f2ba96248172e38c9988d4538bc85e547caf4fe634d26ae34e2b59bb38cd2",
+    "annotations/instances_val_clean.json": "7eed6d56f77391f4d0e0c6214cf4e90a88d34e0ceec31b7346a804e3027df438",
+    "manifests/exclusions.tsv": "853503d26df134d18ef07839ff9ee1f605eaf5ed260393ad58fa17a5da00f1c4",
+    "manifests/images.tsv": "ab012d0a01106d70100a5961fba787754164b306a1d86b949c723011c63bb40a",
+    "manifests/instances.tsv": "2f244221c3fe0f7439cdaaaa9b54bae8bda1df31886c1108aaa4d72927b49045",
+    "manifests/scene_groups.tsv": "870fe8040283eeba340fbdb5b9e6eaf26843c6909fafb39e2be11f9975cda5d0"
+  },
+  "source_files": {
+    "images": 1003,
+    "instances": 2309,
+    "labels": 1003
+  },
+  "status": "pass"
+}

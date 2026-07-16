@@ -1,0 +1,122 @@
+{
+  "base_cross_split_intersections_before_perceptual_filter": {
+    "train_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "train_clean__val_clean": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "val_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    }
+  },
+  "checks": {
+    "all_coco_jsons_round_trip_through_pycocotools_COCO": true,
+    "all_exact_duplicate_labels_semantically_equal_at_iou_0p99": true,
+    "all_yolo_rows_class_0_and_valid_polygons": true,
+    "bbox_and_area_generated_by_pycocotools": true,
+    "cross_split_perceptual_d4_confirmed_pairs_zero_after_priority": true,
+    "cross_split_scene_and_sha256_intersections_zero": true,
+    "frozen_test_fingerprint_matches": true,
+    "manifest_exactly_covers_source_directories": true,
+    "source_files_unchanged_after_generation": true
+  },
+  "cross_split_intersections": {
+    "train_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "train_clean__val_clean": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    },
+    "val_clean__test_frozen": {
+      "image_sha256": [],
+      "image_sha256_count": 0,
+      "scene_key_count": 0,
+      "scene_keys": []
+    }
+  },
+  "exact_image_duplicates": {
+    "equivalent_raster_groups_at_iou_threshold": 1,
+    "exact_raster_groups": 79,
+    "groups": 80,
+    "mask_iou_threshold": 0.99,
+    "minimum_matched_iou": 0.9969942389580029,
+    "rows": 160
+  },
+  "frozen_test": {
+    "actual_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "expected_fingerprint": "c5fd1505c69860ca359ee3f9affc60e6a9dab08734fc888b4ab05014561b4f9b",
+    "matched": true
+  },
+  "generated_files_sha256": {
+    "annotations/instances_test_frozen.json": "0f5075f7398c6a45934ec98426f15e88095a3e969f587b81edb787e95492dcb5",
+    "annotations/instances_test_scene_unique.json": "47144432b6a60f4b9e7d912b9b4d1b31ad0d7dba455c2c907604efce2f0c1613",
+    "annotations/instances_train_clean.json": "903eb0bd2598413380fe7abc32bd649e8584f2eabb7a1399b7770fa6fa691753",
+    "annotations/instances_val_clean.json": "c1afa6fb3b58603d27cf9d236b81f8021ad8fe5ef1ea597bdc9ad086a03b56e4",
+    "manifests/exclusions.tsv": "d3235543d22a648caac51e56be682ff5e3f200172c04a46cc4e812602f9320d1",
+    "manifests/images.tsv": "ba9a7c034f4581f157a9d0db08e63e64658f5b3f6a4a5fd02ece085c4eeeef1e",
+    "manifests/instances.tsv": "7aabf3bc2553f71fa3f0f9e6249d8b199d005950ed558168b1badb352f8515b5",
+    "manifests/perceptual_groups.tsv": "f42bddaa71491817d64c74116d9d4cbf91ee3931f8db27f2753f815a6ec70aab",
+    "manifests/scene_groups.tsv": "b5551691bfeafbeb3aebe6dc334a72e5c9f93a336909e512a2d48e90c56223a4"
+  },
+  "perceptual_d4_audit": {
+    "coarse_candidates": 9,
+    "confirmed_by_split_pair": {
+      "train_clean__val_clean": 9
+    },
+    "confirmed_pairs": 9,
+    "excluded_images": 9,
+    "excluded_instances": 9,
+    "groups": 5,
+    "residual_confirmed_pairs": 0,
+    "rule": {
+      "coarse_corr_threshold": 0.995,
+      "coarse_size": 16,
+      "color": "Pillow grayscale L",
+      "confirm_corr_threshold": 0.995,
+      "confirm_same_d4": true,
+      "confirm_size": 128,
+      "d4_order": [
+        "rot0",
+        "flip_lr_rot0",
+        "rot90",
+        "flip_lr_rot90",
+        "rot180",
+        "flip_lr_rot180",
+        "rot270",
+        "flip_lr_rot270"
+      ],
+      "normalization": "flatten, zero mean, L2 norm",
+      "priority": [
+        "test_frozen",
+        "val_clean",
+        "train_clean"
+      ],
+      "resize": "Pillow Bilinear",
+      "ssim": "skimage.metrics.structural_similarity, data_range=255",
+      "ssim_threshold": 0.96
+    },
+    "scanned_cross_split_pairs": 137191
+  },
+  "source_files": {
+    "images": 1003,
+    "instances": 2309,
+    "labels": 1003
+  },
+  "status": "pass"
+}

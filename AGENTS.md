@@ -58,6 +58,7 @@
 - `runs/runs24`：从 `roboflow_team128_v5` 定向挖掘 hard negative 并从 runs15 继续微调。标准 test Mask P95.1/R81.5，mask-NMS 最佳 F1 为 0.8821，仍未达 P95/R90，不晋升；机械臂抓取候选仍推荐 runs6 策略。报告见 `runs/runs24/segment/INDUSTRIAL_READINESS_REPORT.md`。
 - `runs/runs25`：复核 runs6 + runs13 双模型抓取候选部署策略，在 `exports/graspable_yolo_seg` test 集达到 P95.96/R97.94，满足可抓取大目标离线候选检测 P95/R90；已导出策略后 YOLO 标签、完成 4 FP / 2 FN 审计，并新增 `scripts/predict_graspable_two_model_policy.py` 端到端预测入口，可输出 `robot_candidates.csv`、候选 JSONL 和叠图预览；错误集中在 `roboflow_team128_v5` 叶片密集域；全实例口径仍未达标，真实机械臂闭环仍需现场验证。报告见 `runs/runs25/segment/INDUSTRIAL_READINESS_REPORT.md`，验收矩阵见 `runs/runs25/segment/INDUSTRIAL_ACCEPTANCE_MATRIX.md`。
 - `runs/runs26`：复核全实例多模型缓存后处理。严格 P95/R90 仍未达标；按用户最新“Precision/Recall 约 90%”口径，来源专属 runs8+runs24 策略在主数据集 test 达到 `TP=227 / FP=28 / FN=27`，Precision 89.02%、Recall 89.37%、F1 89.19%，可作为当前离线全实例近 90/90 策略。报告见 `runs/runs26/segment/INDUSTRIAL_READINESS_REPORT.md`，策略见 `runs/runs26/segment/source_aware_approx_p90r90_policy.json`。
+- `runs/runs27`：已完成 `facebookresearch/sam3` 零样本水果分割部署与西瓜 val→test 严格评测。test COCO Mask AP50 87.06%、AP75 75.30%、mAP50-95 70.08%；val 冻结阈值后 test Precision 84.05%、Recall 85.04%、F1 84.54%、正样本实例 Accuracy 73.22%，未达 P90/R90；同源/重复图去重估计 F1 83.91%；8 GB GPU 峰值 allocated 5.86 GiB。报告见 `runs/runs27/sam3/watermelon_zero_shot_benchmark/SAM3_WATERMELON_EVALUATION.md`，部署说明见 `deploy/sam3/README.md`。
 
 ## 标签格式
 

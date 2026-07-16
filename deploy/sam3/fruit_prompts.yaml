@@ -1,0 +1,96 @@
+version: 1
+
+model:
+  repo_id: facebook/sam3
+  # 已按官方 SHA-256 校验的本地权重；权重保存在项目仓库外，不纳入 Git。
+  checkpoint: D:/MelonDataset/sam3/sam3.pt
+
+runtime:
+  device: cuda
+  # 当前官方 image checkpoint 的旋转位置编码固定为 1008；改成 560/756 会触发形状断言。
+  resolution: 1008
+  # 原图有不少 4032x3024；SAM processor 会把候选 mask 上采样到传入图尺寸。
+  # 先等比缩到最长边 1024，避免仅 mask 后处理就耗尽 8 GB 显存。
+  max_image_side: 1024
+  amp_dtype: bfloat16
+  confidence_threshold: 0.50
+  min_area_ratio: 0.001
+  # 全局 mask-NMS：同时去除同提示重复候选和不同提示对同一实例的重复命中。
+  mask_nms_iou: 0.70
+  max_detections_per_prompt: 50
+  max_candidates_per_image: 100
+
+output:
+  save_masks: true
+  save_overlays: true
+
+# SAM 3 的概念提示应使用简短英文名词短语。priority 较高的具体类别会在
+# 跨提示词 mask 重叠时优先于通用类别，避免同一个水果被重复分拣。
+prompts:
+  - class_id: 0
+    class_name: watermelon
+    text: watermelon
+    priority: 100
+    enabled: true
+
+  - class_id: 1
+    class_name: apple
+    text: apple
+    priority: 100
+    enabled: true
+
+  - class_id: 2
+    class_name: orange
+    text: orange
+    priority: 100
+    enabled: true
+
+  - class_id: 3
+    class_name: banana
+    text: banana
+    priority: 100
+    enabled: true
+
+  - class_id: 4
+    class_name: pear
+    text: pear
+    priority: 100
+    enabled: true
+
+  - class_id: 5
+    class_name: peach
+    text: peach
+    priority: 100
+    enabled: false
+
+  - class_id: 6
+    class_name: mango
+    text: mango
+    priority: 100
+    enabled: false
+
+  - class_id: 7
+    class_name: dragon_fruit
+    text: dragon fruit
+    priority: 100
+    enabled: false
+
+  - class_id: 8
+    class_name: pineapple
+    text: pineapple
+    priority: 100
+    enabled: false
+
+  - class_id: 9
+    class_name: pomegranate
+    text: pomegranate
+    priority: 100
+    enabled: false
+
+  # 只用于发现未列入具体类别的水果；它不能给出水果亚类名称。
+  # 启用前应在现场数据上评估与具体提示词的混淆。
+  - class_id: 100
+    class_name: fruit_unknown
+    text: fruit
+    priority: 0
+    enabled: false
