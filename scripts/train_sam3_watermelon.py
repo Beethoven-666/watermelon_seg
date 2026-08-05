@@ -170,6 +170,10 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Validate the dataset/collator and write metadata without loading SAM 3.",
     )
+    parser.add_argument("--val-only-subprocess", action="store_true")
+    parser.add_argument("--val-epoch", type=int)
+    parser.add_argument("--adapter-path", type=Path)
+    parser.add_argument("--val-output-json", type=Path)
     return parser.parse_args()
 
 
@@ -183,6 +187,24 @@ def sha256_file(path: Path) -> str:
         while chunk := handle.read(8 * 1024 * 1024):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def match_hash(path: Path, expected: str) -> bool:
+    actual = sha256_file(path)
+    if actual == expected:
+        return True
+    if path.suffix in (".json", ".tsv", ".csv", ".txt"):
+        try:
+            content = path.read_bytes()
+            actual_lf = hashlib.sha256(content.replace(b"\r\n", b"\n")).hexdigest()
+            if actual_lf == expected:
+                return True
+            actual_crlf = hashlib.sha256(content.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")).hexdigest()
+            if actual_crlf == expected:
+                return True
+        except OSError:
+            pass
+    return False
 
 
 def host_memory_snapshot() -> dict[str, float]:
@@ -248,7 +270,7 @@ def verify_dataset_integrity(project_root: Path, dataset_root: Path) -> dict[str
     checked_generated = 0
     for relative, expected in integrity.get("generated_files_sha256", {}).items():
         path = dataset_root / relative
-        if not path.is_file() or sha256_file(path) != expected:
+        if not path.is_file() or not match_hash(path, expected):
             raise ValueError(f"Derived dataset file hash mismatch: {path}")
         checked_generated += 1
 
@@ -264,9 +286,9 @@ def verify_dataset_integrity(project_root: Path, dataset_root: Path) -> dict[str
             seen_pairs.add(pair)
             image_path = project_root / image_relative
             label_path = project_root / label_relative
-            if sha256_file(image_path) != row["image_sha256"]:
+            if not match_hash(image_path, row["image_sha256"]):
                 raise ValueError(f"Source image drift detected: {image_path}")
-            if sha256_file(label_path) != row["label_sha256"]:
+            if not match_hash(label_path, row["label_sha256"]):
                 raise ValueError(f"Source label drift detected: {label_path}")
             checked_rows += 1
     return {
@@ -303,6 +325,10 @@ def resolve_args(args: argparse.Namespace) -> argparse.Namespace:
     args.output_dir = args.output_dir.expanduser().resolve()
     if args.resume is not None:
         args.resume = args.resume.expanduser().resolve()
+    if args.adapter_path is not None:
+        args.adapter_path = args.adapter_path.expanduser().resolve()
+    if args.val_output_json is not None:
+        args.val_output_json = args.val_output_json.expanduser().resolve()
     if args.resolution != SUPPORTED_RESOLUTION:
         raise ValueError(
             "The released SAM 3 image checkpoint is wired for resolution=1008; "
@@ -449,6 +475,7 @@ def inspect_collated_batch(batch: dict[str, Any], resolution: int) -> dict[str, 
 
 def build_base_model_memory_efficient(
     checkpoint: Path,
+    use_mmap: bool = True,
 ) -> tuple[torch.nn.Module, dict[str, Any]]:
     """Build SAM 3 and copy checkpoint tensors from a read-only memory map.
 
@@ -458,6 +485,7 @@ def build_base_model_memory_efficient(
     a 16 GB workstation. Loading from a path with ``mmap=True`` preserves the
     upstream key mapping while avoiding the second committed tensor copy.
     """
+    print("build_base_model: entering build_sam3_image_model...", flush=True)
     model = build_sam3_image_model(
         device="cpu",
         eval_mode=False,
@@ -467,12 +495,14 @@ def build_base_model_memory_efficient(
         enable_inst_interactivity=False,
         compile=False,
     )
+    print("build_base_model: entering torch.load...", flush=True)
     payload = torch.load(
         str(checkpoint),
         map_location="cpu",
         weights_only=True,
-        mmap=True,
+        mmap=use_mmap,
     )
+    print("build_base_model: entering state_dict filtering...", flush=True)
     if "model" in payload and isinstance(payload["model"], dict):
         payload = payload["model"]
     if not isinstance(payload, dict):
@@ -484,9 +514,11 @@ def build_base_model_memory_efficient(
     }
     if not detector_state:
         raise ValueError(f"No detector.* tensors found in SAM 3 checkpoint: {checkpoint}")
+    print("build_base_model: entering model.load_state_dict...", flush=True)
     missing, unexpected = model.load_state_dict(detector_state, strict=False)
+    print("build_base_model: finished loading state dict...", flush=True)
     load_info = {
-        "mode": "torch.load(weights_only=True, mmap=True)",
+        "mode": f"torch.load(weights_only=True, mmap={use_mmap})",
         "detector_tensor_count": len(detector_state),
         "missing_keys": list(missing),
         "unexpected_keys": list(unexpected),
@@ -951,6 +983,37 @@ def validate_coco_epoch(
     return metrics
 
 
+def run_val_subprocess(args: argparse.Namespace) -> int:
+    if not args.adapter_path or not args.val_output_json:
+        print("Error: --adapter-path and --val-output-json are required for val-only-subprocess", file=sys.stderr)
+        return 1
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is required for SAM 3 validation")
+    device = torch.device("cuda", 0)
+    torch.cuda.set_device(device)
+
+    print(f"Subprocess: loading SAM 3 base checkpoint {args.checkpoint}...", flush=True)
+    model, _ = build_base_model_memory_efficient(args.checkpoint, use_mmap=False)
+    model._sam3_freeze_policy = args.freeze_policy
+    apply_freeze_policy(model, args.freeze_policy)
+    
+    print(f"Subprocess: restoring adapter state from {args.adapter_path}...", flush=True)
+    payload = torch.load(args.adapter_path, map_location="cpu", weights_only=False)
+    load_adapter_state(model, payload["adapter"])
+    
+    model.to(device)
+    
+    epoch = args.val_epoch if args.val_epoch is not None else 0
+    print(f"Subprocess: starting COCO validation for epoch {epoch + 1}...", flush=True)
+    
+    metrics = validate_coco_epoch(model, args, device, epoch)
+    
+    json_dump(args.val_output_json, metrics)
+    print("Subprocess: validation completed successfully.", flush=True)
+    return 0
+
+
 def trainable_state_dict(model: torch.nn.Module) -> dict[str, torch.Tensor]:
     return {
         name: tensor.detach().cpu()
@@ -1045,7 +1108,24 @@ def restore_training_state(
     metadata = payload["metadata"]
     if metadata["freeze_policy"] != model._sam3_freeze_policy:  # type: ignore[attr-defined]
         raise ValueError("Resume freeze policy differs from the current run")
-    if metadata.get("resume_signature") != expected_metadata.get("resume_signature"):
+    # 容错换行符差异引起的签名哈希冲突
+    payload_sig = dict(payload["metadata"].get("resume_signature", {}))
+    exp_sig = dict(expected_metadata.get("resume_signature", {}))
+    for key, path_str in [("train_ann_sha256", expected_metadata.get("train_ann")), 
+                          ("val_ann_sha256", expected_metadata.get("val_ann"))]:
+        if key in payload_sig and key in exp_sig and path_str:
+            try:
+                path = Path(path_str)
+                if path.is_file():
+                    content = path.read_bytes()
+                    h_lf = hashlib.sha256(content.replace(b"\r\n", b"\n")).hexdigest()
+                    h_crlf = hashlib.sha256(content.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")).hexdigest()
+                    if payload_sig[key] in (h_lf, h_crlf) and exp_sig[key] in (h_lf, h_crlf):
+                        payload_sig[key] = exp_sig[key]
+            except Exception:
+                pass
+
+    if payload_sig != exp_sig:
         raise ValueError("Resume checkpoint data/base-weight/hyperparameter signature differs")
     load_adapter_state(model, payload["adapter"])
     optimizer.load_state_dict(payload["optimizer"])
@@ -1089,8 +1169,26 @@ def export_merged_checkpoint(
     os.replace(temporary, output_path)
 
 
+def initialize_training_objects(
+    args: argparse.Namespace,
+    device: torch.device,
+) -> tuple[torch.nn.Module, torch.optim.Optimizer, torch.amp.GradScaler, Sam3LossWrapper]:
+    print("loading SAM 3 base checkpoint...", flush=True)
+    model, _ = build_base_model_memory_efficient(args.checkpoint)
+    model._sam3_freeze_policy = args.freeze_policy  # type: ignore[attr-defined]
+    apply_freeze_policy(model, args.freeze_policy)
+    install_frozen_backbone_no_grad(model)
+    model.to(device)
+    criterion = build_loss(args).to(device)
+    optimizer = build_optimizer(model, args)
+    scaler = torch.amp.GradScaler("cuda", enabled=True)
+    return model, optimizer, scaler, criterion
+
+
 def main() -> int:
     args = resolve_args(parse_args())
+    if args.val_only_subprocess:
+        return run_val_subprocess(args)
     prepare_output(args)
     triton_cache = args.output_dir / "triton_cache"
     triton_cache.mkdir(parents=True, exist_ok=True)
@@ -1189,24 +1287,15 @@ def main() -> int:
             )
         }
     )
-    print("loading SAM 3 base checkpoint...", flush=True)
-    model, checkpoint_loading = build_base_model_memory_efficient(args.checkpoint)
-    base_metadata["checkpoint_loading"] = checkpoint_loading
-    base_metadata["host_memory_after_checkpoint_load"] = host_memory_snapshot()
-    model._sam3_freeze_policy = args.freeze_policy  # type: ignore[attr-defined]
-    apply_freeze_policy(model, args.freeze_policy)
-    install_frozen_backbone_no_grad(model)
+
+    model, optimizer, scaler, criterion = initialize_training_objects(args, device)
     params = parameter_summary(model)
     base_metadata["parameters"] = params
     write_parameter_manifest(model, args.output_dir)
     print(f"parameters: {params}", flush=True)
 
-    model.to(device)
     gc.collect()
     base_metadata["host_memory_after_cuda_move"] = host_memory_snapshot()
-    criterion = build_loss(args).to(device)
-    optimizer = build_optimizer(model, args)
-    scaler = torch.amp.GradScaler("cuda", enabled=True)
     json_dump(args.output_dir / "run_config.json", {**vars(args), **base_metadata})
     start_epoch = 0
     global_step = 0
@@ -1249,6 +1338,34 @@ def main() -> int:
             total_steps,
         )
         append_jsonl(metrics_path, train_metrics)
+        # 1. 验证开始前保存恢复点 (latest_train_state.pt)
+        # 注意此时保存的 best_selection_score 还是上一轮的最优得分
+        save_training_state(
+            latest_path,
+            model,
+            optimizer,
+            scaler,
+            epoch=epoch + 1,
+            global_step=global_step,
+            best_selection_score=best_selection_score,
+            metadata=base_metadata,
+        )
+        print(f"Pre-validation recovery point saved to {latest_path}", flush=True)
+
+        # 2. 保存临时的 epoch adapter，供评估子进程加载
+        epoch_path = args.output_dir / f"epoch_{epoch + 1:03d}_adapter.pt"
+        save_adapter(
+            epoch_path,
+            model,
+            epoch=epoch + 1,
+            global_step=global_step,
+            selection_metric="pre_val_checkpoint",
+            selection_score=0.0,
+            val_metrics={},
+            metadata=base_metadata,
+        )
+
+        # 3. 运行验证
         if args.max_val_steps:
             val_loader = make_loader(val_dataset, args, training=False, epoch=epoch)
             val_metrics = validate_epoch(
@@ -1259,11 +1376,95 @@ def main() -> int:
             val_metrics["selection_metric"] = selection_metric
             val_metrics["selection_score"] = selection_score
         else:
-            val_metrics = validate_coco_epoch(model, args, device, epoch)
+            val_output_json = args.output_dir / f"epoch_{epoch + 1:03d}_val_metrics.json"
+            if val_output_json.is_file():
+                try:
+                    val_output_json.unlink()
+                except OSError:
+                    pass
+            
+            cmd = [
+                sys.executable,
+                str(Path(__file__).resolve()),
+                "--val-only-subprocess",
+                "--val-epoch", str(epoch),
+                "--adapter-path", str(epoch_path),
+                "--val-output-json", str(val_output_json),
+                "--checkpoint", str(args.checkpoint),
+                "--dataset-root", str(args.dataset_root),
+                "--train-ann", str(args.train_ann),
+                "--val-ann", str(args.val_ann),
+                "--freeze-policy", args.freeze_policy,
+                "--resolution", str(args.resolution),
+                "--seed", str(args.seed),
+                "--amp-dtype", args.amp_dtype,
+                "--selection-metric", args.selection_metric,
+                "--val-max-image-side", str(args.val_max_image_side),
+            ]
+            
+            print(f"Launching COCO validation subprocess: {' '.join(cmd)}", flush=True)
+            # Delete model and optimizer to free both GPU and CPU memory
+            del model, optimizer, scaler, criterion
+            gc.collect()
+            torch.cuda.empty_cache()
+
+            val_log_path = args.output_dir / f"epoch_{epoch + 1:03d}_val_subprocess.log"
+            try:
+                with val_log_path.open("w", encoding="utf-8") as f_log:
+                    res = subprocess.run(cmd, stdout=f_log, stderr=subprocess.STDOUT, check=True, timeout=1200)
+                if val_output_json.is_file():
+                    val_metrics = json.loads(val_output_json.read_text(encoding="utf-8"))
+                    try:
+                        val_output_json.unlink()
+                    except OSError:
+                        pass
+                else:
+                    raise FileNotFoundError(f"Val output json not found: {val_output_json}")
+            except Exception as e:
+                print(f"WARNING: COCO validation subprocess failed/crashed for epoch {epoch + 1}: {e}", flush=True)
+                val_metrics = {
+                    "phase": "val_coco",
+                    "epoch": epoch + 1,
+                    "images": 0,
+                    "instances": 0,
+                    "elapsed_seconds": 0.0,
+                    "seconds_per_image": 0.0,
+                    "selection_metric": args.selection_metric,
+                    "selection_score": -999.0,
+                    "coco_mask_metrics": {
+                        "mask_map_50_95": 0.0,
+                        "mask_ap50": 0.0,
+                        "mask_ap75": 0.0,
+                        "mask_ar100": 0.0,
+                    },
+                    "best_f1_policy": {
+                        "f1": 0.0,
+                        "threshold": 0.5,
+                        "precision": 0.0,
+                        "recall": 0.0,
+                    },
+                    "subprocess_crashed": True,
+                    "crash_error": str(e)
+                }
+            finally:
+                # Re-initialize training objects and restore state
+                model, optimizer, scaler, criterion = initialize_training_objects(args, device)
+                restore_training_state(
+                    latest_path,
+                    model,
+                    optimizer,
+                    scaler,
+                    base_metadata,
+                )
+                gc.collect()
+                torch.cuda.empty_cache()
+            
             selection_metric = str(val_metrics["selection_metric"])
             selection_score = float(val_metrics["selection_score"])
+        
         append_jsonl(metrics_path, val_metrics)
-        epoch_path = args.output_dir / f"epoch_{epoch + 1:03d}_adapter.pt"
+        
+        # 4. 更新带有最终评测结果的 epoch_path adapter
         save_adapter(
             epoch_path,
             model,
@@ -1274,6 +1475,8 @@ def main() -> int:
             val_metrics=val_metrics,
             metadata=base_metadata,
         )
+        
+        # 5. 更新最佳及最新参数
         if selection_score > best_selection_score:
             best_selection_score = selection_score
             save_adapter(
