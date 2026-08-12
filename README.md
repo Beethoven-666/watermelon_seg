@@ -243,3 +243,14 @@ runs/runs26/analysis/source_aware_approx_p90r90_policy_export_eval_all_gt
 - 不要把检测框标签直接混入本数据集；本项目主数据集只接受实例分割多边形标签。
 - `exports/graspable_yolo_seg` 是工业抓取候选口径的派生数据集，不等同于主数据集全实例口径。
 - 修改数据来源、拆分、类别编号或标签格式时，请同步更新 `README.md`、`data.yaml`、`classes.txt`、`AGENTS.md` 和 `external/SOURCES.md`。
+# YOLO26 西瓜分割与果托跟踪（当前实施阶段）
+
+仓库新增了相互独立的双模型二维流程：西瓜使用 `YOLO26s-seg` 实例分割，果托使用
+`YOLO26s` Detect 并由 ByteTrack 在连续帧中维持 `track_id`。两者分别在归一化 ROI 内
+运行，输出统一映射回完整彩色画面。支持 `watermelon`、`tray`、`dual` 三种运行模式，
+入口和环境说明见 `deploy/yolo26/README.md`。
+
+果托数据集位于 `datasets/tray_detect`，与根目录西瓜分割标签完全隔离。当前未提供真实
+果托标注或自定义权重，因此果托正式训练、真实视频 ByteTrack 和双模型实物输出不能被
+宣称完成；相关脚本、审计器和不依赖权重的连续状态测试已提供。历史 SAM 3 文件保留，
+新 YOLO26 入口不导入或调用 SAM 3。

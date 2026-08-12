@@ -1,0 +1,8 @@
+# 已在本机 Python 3.13.14 / RTX 5060 Laptop 上验证的精确版本（2026-08-12）。
+ultralytics==8.4.83
+torch==2.12.1+cu130
+opencv-python==4.13.0.90
+PyYAML==6.0.3
+numpy==2.4.4
+pytest==9.1.1
+psutil==7.2.2

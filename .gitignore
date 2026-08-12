@@ -62,3 +62,9 @@ test_images/
 
 # Ultralytics release weights are downloaded locally, not versioned.
 yolo*.pt
+
+# YOLO26 audits, training, validation and runtime media are local evidence.
+runs/yolo26_watermelon_seg/
+runs/yolo26_tray_detect/
+runs/runtime/yolo26_dual/
+datasets/tray_detect/unlabeled/

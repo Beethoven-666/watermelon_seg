@@ -1,0 +1,65 @@
+version: 1
+
+source:
+  backend: opencv
+  value: 0
+  requested_width: 848
+  requested_height: 480
+  requested_fps: 60
+
+rois:
+  # 示例值；部署前必须按真实完整画面调整。
+  watermelon: [0.00, 0.00, 0.55, 1.00]
+  tray: [0.45, 0.00, 1.00, 1.00]
+
+models:
+  watermelon:
+    weights: runs/yolo26_watermelon_seg/train/weights/best.pt
+    task: segment
+    class_id: 0
+    class_name: watermelon
+    imgsz: 640
+    conf: 0.25
+    iou: 0.70
+    device: 0
+    half: true
+  tray:
+    weights: runs/yolo26_tray_detect/train/weights/best.pt
+    task: detect
+    class_id: 0
+    class_name: tray
+    imgsz: 640
+    conf: 0.20
+    iou: 0.70
+    device: 0
+    half: true
+
+tracker:
+  config: configs/bytetrack_tray.yaml
+  history_length: 30
+
+runtime:
+  mode: dual
+  watermelon_every_n_frames: 10
+  tray_every_n_frames: 1
+  camera_queue_size: 1
+  fail_on_missing_watermelon_weights: true
+  fail_on_missing_tray_weights: true
+
+visualization:
+  show_window: true
+  draw_rois: true
+  draw_watermelon_masks: true
+  draw_watermelon_boxes: true
+  draw_watermelon_centroids: true
+  draw_tray_boxes: true
+  draw_tray_centers: true
+  draw_track_ids: true
+  draw_track_history: true
+
+output:
+  root: runs/runtime/yolo26_dual
+  save_annotated_video: true
+  save_jsonl: true
+  save_resolved_config: true
+  save_runtime_versions: true
